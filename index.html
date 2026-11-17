@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alexandru-Valentin Florea</title>
+<meta name="description" content="Alexandru-Valentin Florea, AI engineer. MSc Data Science and AI Technology at TU Delft. Computer vision, NLP and robot perception projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Silkscreen:wght@400;700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="boot" id="boot" aria-hidden="true"><pre id="bootlog"></pre><div class="skip hud">press any key to skip</div></div>
+
+<div class="warpchip" role="status"><span>Warp engaged</span><button id="warpOff" aria-label="Stop the warp effect">X</button></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><i></i>AVF</a>
+    <div class="rev" id="rev" aria-hidden="true" title="Scroll progress"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <nav aria-label="Sections">
+      <a href="#about">About</a><a href="#timeline">Timeline</a><a href="#studies">Studies</a><a href="#work">Work</a><a href="#projects">Projects</a><a href="#hackathons">Hackathons</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="chip" id="plainBtn" aria-pressed="false">Text only</button>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" id="start">
+  <div class="fly" aria-hidden="true"><i></i><svg viewBox="0 0 50 14"><path d="M0 6h22l8-6h3l-4 6h15q6 1 0 2H29l4 6h-3l-8-6H0z"/></svg></div>
+  <div class="wrap">
+    <div>
+      <p class="hello" aria-label="Hello, guest!"><span id="typed">Hello, guest!</span><span class="caret" aria-hidden="true"></span></p>
+      <h1><span>Alexandru</span><span class="l2">Valentin</span><span class="l3">Florea</span></h1>
+      <p class="lede"><b>AI engineer in training.</b> I build vision and language models, then take them outside: onto satellite imagery, seven languages of hate speech, and a robot rolling down a railway track.</p>
+      <div class="cta">
+        <a class="btn go" href="#projects">See the projects</a>
+        <button class="btn" id="warpBtn">To infinity and beyond ✦</button>
+      </div>
+    </div>
+    <aside class="card-id" aria-label="Quick facts">
+      <dl>
+        <dt>Class</dt><dd>AI engineer</dd>
+        <dt>Guild</dt><dd>TU Delft, MSc Data Science and AI Technology</dd>
+        <dt>Base</dt><dd>Amsterdam, NL</dd>
+        <dt>Off duty</dt><dd>Aviation and motorsport. Anything fast with a good engineering story.</dd>
+        <dt>Quest</dt><dd>Understand AI all the way down, not only call the API</dd>
+      </dl>
+      <div class="inv" aria-label="Skills">
+        <span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">NumPy / Pandas</span><span class="tag">Computer vision</span><span class="tag">NLP</span><span class="tag">ML pipelines</span><span class="tag">Git</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 01</span><h2>About me</h2></div>
+    <div class="about">
+      <div class="panel bio">
+        <img class="me" alt="Portrait of Alexandru-Valentin Florea" width="480" height="600" src="img/me.jpg">
+        <div>
+        <p class="big">I'm a master's student in Data Science and AI Technology at TU Delft, following the Visual Computing and Language and Speech Technology themes.</p>
+        <p>My bachelor's is in Computer Science from Vrije Universiteit Amsterdam, where I also completed the Honours Programme and a minor in Business Analytics and Data Science. My bachelor's thesis became a paper that I presented in London and that Springer Nature published in 2026, with me as first author.</p>
+        <p>What I like most is the part of machine learning where a model meets messy reality: thin contrails hiding among cirrus clouds, implicit hate that no keyword catches, a webcam bolted to a vibrating trolley. I want to work on technical AI in industry, and one day build a company around it.</p>
+        <p>Away from the keyboard my two big passions are aviation and cars, racing above all. Both reward the same things I like in engineering: tight margins, good telemetry, and people who obsess over the last tenth. In 2020 I picked up a DSLR and ended up trackside as photographer for Junior Motorsport at three rounds of the Romanian national championship.</p>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="panel fact"><b>Studies</b><span><strong>MSc DSAIT</strong>, TU Delft, since Sept 2025. Day to day: Python and PyTorch, on vision and language models.</span></div>
+        <div class="panel fact"><b>Degree</b><span><strong>BSc Computer Science, Honours</strong>, VU Amsterdam, 2022 to 2025. 30 EC on top of the standard programme.</span></div>
+        <div class="panel fact"><b>Speaks</b><span><strong>Romanian</strong> natively, <strong>English</strong> at Cambridge C2 (and TOEFL iBT C1), <strong>Dutch</strong> at A2 and climbing.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 02</span><h2>The run so far</h2></div>
+    <div class="tl-hint hud"><span>Drag the timeline, or use</span><kbd>←</kbd><kbd>→</kbd><span>on the d-pad</span></div>
+  </div>
+  <div class="tl-scroll" id="tlScroll" tabindex="0" aria-label="Timeline, scrolls sideways"><div class="tl-track" id="tlTrack"></div></div>
+  <div class="wrap"><div class="panel stage" id="stage" aria-live="polite"></div></div>
+</section>
+
+<section id="studies">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 03</span><h2>Academics</h2></div>
+    <article class="panel job edu now">
+      <div>
+        <h3>Delft University of Technology</h3>
+        <div class="meta"><span>MSc Data Science and Artificial Intelligence Technology</span></div>
+        <span class="when">Sept 2025 – now</span>
+      <div class="loadbar" aria-hidden="true"><i></i></div><span class="loadnote">In progress</span>
+      </div>
+      <div>
+        <p class="t">Where I am now, and where almost everything in the Projects section comes from. The programme is built around doing: nearly every course ends in a model you train, measure and defend. I chose two themes, <b>Visual Computing</b> and <b>Language and Speech Technology</b>, so my work sits on both sides of modern AI: pixels and words.</p>
+        <div class="courses">
+          <div><h4>Visual computing</h4><p>Computer Vision, 3D Visual Computing (camera geometry, stereo, NeRF, Gaussian splatting), and the Computer Graphics and Visualisation seminar.</p></div>
+          <div><h4>Language and speech</h4><p>Natural Language Processing, NLP for Society, and automatic speech recognition with Whisper.</p></div>
+          <div><h4>Core</h4><p>Machine and Deep Learning, in Python and PyTorch throughout.</p></div>
+          <div><h4>In the field</h4><p>The Joint Interdisciplinary Project, where a mixed engineering team builds for a real company. Mine was the YARC rail-inspection robot.</p></div>
+        </div>
+      </div>
+    </article>
+    <article class="panel job edu" style="margin-top:22px">
+      <div>
+        <h3>Vrije Universiteit Amsterdam</h3>
+        <div class="meta"><span>BSc Computer Science, with Honours</span><span>Minor: Business Analytics and Data Science</span></div>
+        <span class="when">Sept 2022 – Aug 2025</span>
+        <div class="nums"><div><b>8.5</b><span>thesis</span></div><div><b>7.8</b><span>degree<br>average</span></div><div><b>8.2</b><span>honours<br>programme</span></div></div>
+      </div>
+      <div>
+        <p class="t">A broad computer science degree that tilted more and more toward data and machine learning as it went on. It ended with the thesis <b>“Understanding Body Dysmorphic Disorder Through Dynamic Network Simulation and Roleplay-Based Visualization”</b>, which later became my first published paper.</p>
+        <p class="t">From my second year (2023) I also followed the <b>Honours Programme</b>: 30 EC of extra courses spread over the last two years, on top of the regular 180. In 2024–25 I sat on the Commercial Committee of the <b>Extensus Honours Association</b>.</p>
+        <div class="courses">
+          <div><h4>Where it was heading</h4><p>Statistical Methods, Information Retrieval, Project Big Data, Pervasive Computing (ending in a deep-learning project), and the Business Analytics and Data Science minor.</p></div>
+          <div><h4>The base underneath</h4><p>Programming in C++ and Java, data structures and algorithms, computer organisation (x86 assembly), computer networks, web technology, software design. Good grounding; not what I do day to day now.</p></div>
+        </div>
+      </div>
+    </article>
+    <div class="panel log" aria-label="Built at VU">
+      <div><b>PackBot · 2023</b><span>A Lego EV3 delivery robot (team of 3, MATLAB) that reads the number on a package with a camera, follows the matching colour-coded route and comes back for the next one. I trained the digit-recognition network and built its image pipeline.</span></div>
+      <div><b>IJVM emulator · 2023</b><span>A small virtual machine written in C for the Computer Programming Project. My first larger codebase.</span></div>
+      <div><b>Dutch flashcards · 2024</b><span>A JavaFX language-learning app (team of 4) with audio fill-in-the-word and multi-gap modes, JSON import/export, and a “fun mode” of Dutch cultural trivia that I led.</span></div>
+      <div><b>Project Big Data · 2024</b><span>Classification and clustering over an 800,000-row dataset with Pandas (team of 4), ending in a report with data-driven recommendations.</span></div>
+    </div>
+    <div class="panel school" style="margin-top:22px"><h3>Colegiul Național „Mihai Viteazul”, Bucharest</h3><p>Romanian Baccalaureate, Mathematics and Computer Science</p><span class="when">Sept 2018 – Jun 2022</span><p>Graduated with <b>9.40 / 10</b> from one of Romania's top high schools. Also earned the national informatics certificate (Atestat), the ECDL, <b>Cambridge C2</b> and TOEFL iBT C1 in English.</p></div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 04</span><h2>Work</h2></div>
+    <article class="panel job">
+      <div>
+        <h3>Yokoy</h3>
+        <div class="meta"><span>Working student, Data Science department</span><span>Yokoy Group AG, now Perk</span></div>
+        <span class="when">Jul 2023 – Jan 2025</span>
+      </div>
+      <div>
+        <ul>
+          <li>Maintained and extended the regex-based extraction configurations for Yokoy's production OCR invoice-processing system, capturing line items, pricing and other key fields from client invoices.</li>
+          <li>Diagnosed invoices that failed extraction and wrote targeted configurations to fix them, across dozens of supplier invoice formats.</li>
+          <li>Validated extracted pricing and line-item data with regular expressions before it entered the invoice management platform.</li>
+          <li>Handled confidential client financial data under GDPR and client data-protection requirements.</li>
+        </ul>
+        <div class="rx" aria-hidden="true"><em>/</em>(?&lt;qty&gt;<u>\d+</u>)\s+(?&lt;item&gt;<u>.+?</u>)\s+(?&lt;price&gt;<u>\d+[.,]\d{2}</u>)\s*(?:EUR|CHF)<em>/</em> &nbsp;→&nbsp; 3 &nbsp;|&nbsp; Toner cartridge &nbsp;|&nbsp; 149,90</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 05</span><h2>Projects</h2><p class="sub">Five builds from the last year, newest first, then a few smaller ones from the lab notebook.</p></div>
+
+    <article class="panel feature proj">
+      <div class="txt">
+        <div class="kicker"><span class="hud">Robotics · Vision</span><time>Sept – Nov 2026</time></div>
+        <h3>YARC: camera perception for a rail-inspection robot</h3>
+        <p>YARC is a start-up building a trolley that rides the rails and inspects them. In a five-person interdisciplinary TU Delft team I owned <b>the camera perception subsystem</b>: recording, dataset, detection models and the live system on the trolley.</p>
+        <ul>
+          <li><b>Three views, three detectors.</b> A top-down HD camera over the rail finds sleepers, fasteners, bolts and clips (YOLO26n). A forward 4K camera reads sleepers and switches (YOLO26s). A 360° camera watches for people and vehicles (COCO-pretrained YOLO26n). The trained models are fine-tuned from COCO weights, because I had dozens of labelled frames, not thousands.</li>
+          <li><b>Detect components, infer defects.</b> Real defects are too rare to train on. So the models find components and simple rules flag what is missing. One rule, run over 1,529 frames, turned a single known missing-bolt example into 11 more confirmed ones.</li>
+          <li><b>Recording pipeline on ROS 2.</b> The stock camera driver recorded corrupt frames, so I wrote a node that passes the camera's MJPEG straight through into MCAP bags at about 30 Hz. Frames are then sampled by distance travelled, measured with phase correlation.</li>
+          <li><b>Evaluated on track it had never seen.</b> The data is split by track, not by frame, so neighbouring frames cannot leak into the test.</li>
+          <li><b>Live on the trolley.</b> One ROS 2 detector node per camera, always working on the newest frame. All three ran together during a two-day field test in October 2026.</li>
+        </ul>
+        <div class="nums"><div><b>0.986</b><span>mAP50, HD model,<br>held-out track*</span></div><div><b>16</b><span>recording runs<br>over 4 tracks</span></div><div><b>63 ms</b><span>per image on a<br>laptop CPU</span></div></div>
+        <p style="font-size:13.5px;margin-top:12px">*Common classes (sleepers, fasteners, bolts) on a small validation set; rare defect classes still need more data.</p>
+        <div class="tags"><a class="btn go" href="yarc.html" style="margin-right:6px">Full case study →</a><span class="tag">YOLO26</span><span class="tag">Transfer learning</span><span class="tag">PyTorch</span><span class="tag">ROS 2</span><span class="tag">OpenCV</span><span class="tag">OpenVINO</span><span class="tag">MCAP</span></div>
+      </div>
+      <div class="viz stack">
+        <figure><img class="shot" data-zoom src="img/yarc-laptop.jpg" width="1400" height="536" alt="Laptop on the trolley showing live detections: sleepers, fasteners and bolts boxed in the top-down and forward camera views"><figcaption>Live on the track, 29 Oct 2026: the top-down and forward detectors running side by side.</figcaption></figure>
+        <svg viewBox="0 0 520 320" role="img" aria-label="Top-down diagram of the trolley on the rails with the fields of view of its four cameras">
+          <defs><clipPath id="clipR"><rect x="0" y="60" width="520" height="200"/></clipPath>
+          <linearGradient id="cone" x1="0" x2="1"><stop offset="0" stop-color="#62e4ff" stop-opacity=".45"/><stop offset="1" stop-color="#62e4ff" stop-opacity="0"/></linearGradient></defs>
+          <g clip-path="url(#clipR)"><g class="sleepers" id="sleepers"></g></g>
+          <path d="M0 120H520M0 200H520" stroke="#9c9fc9" stroke-width="5"/>
+          <path d="M300 160 L500 78 L500 242Z" fill="url(#cone)"/>
+          <rect x="150" y="96" width="150" height="128" rx="12" fill="#101330" stroke="#62e4ff" stroke-width="1.5"/>
+          <rect x="204" y="104" width="32" height="32" fill="none" stroke="#ffd166" stroke-dasharray="4 3"/>
+          <rect x="204" y="184" width="32" height="32" fill="none" stroke="#ffd166" stroke-dasharray="4 3"/>
+          <circle cx="220" cy="120" r="6" fill="#ffd166"/><circle cx="220" cy="200" r="6" fill="#ffd166"/>
+          <circle cx="178" cy="160" r="14" fill="none" stroke="#ff5f7a" stroke-width="2" class="ping"/>
+          <circle cx="178" cy="160" r="7" fill="#ff5f7a"/>
+          <rect x="288" y="150" width="14" height="20" rx="3" fill="#62e4ff"/>
+          <rect x="395" y="108" width="26" height="24" fill="none" stroke="#ff5f7a" stroke-width="2" class="det"/>
+          <g font-family="Silkscreen,monospace" font-size="11" fill="#ecebff">
+            <text x="395" y="100" fill="#ff5f7a">clip_displaced</text>
+            <text x="262" y="290" fill="#62e4ff">4K forward: sleepers, switches · YOLO26s</text>
+            <text x="12" y="44" fill="#ffd166">HD top-down: fasteners, bolts · YOLO26n</text>
+            <text x="12" y="290" fill="#ff5f7a">360°: people, vehicles · YOLO26n</text>
+            <text x="440" y="44" fill="#9c9fc9">travel →</text>
+          </g>
+          <path d="M120 50 L212 108" stroke="#ffd166" stroke-width="1" opacity=".6"/>
+          <path d="M100 276 L170 170" stroke="#ff5f7a" stroke-width="1" opacity=".6"/>
+        </svg>
+      </div>
+    </article>
+
+    <div class="grid">
+      <article class="panel card proj">
+        <div class="viz auto"><div class="gapbars">
+          <div class="bar"><span>German</span><i style="width:100%"></i><b>0.60</b></div><div class="bar"><span>Chinese</span><i style="width:75%"></i><b>0.45</b></div><div class="bar"><span>English</span><i style="width:65%"></i><b>0.39</b></div><div class="bar"><span>Arabic</span><i style="width:45%"></i><b>0.27</b></div><div class="bar"><span>French</span><i style="width:38%"></i><b>0.23</b></div><div class="bar"><span>Spanish</span><i style="width:38%"></i><b>0.23</b></div><div class="bar"><span>Hindi</span><i style="width:15%"></i><b>0.09</b></div>
+          <small>F1 lost on implicit hate, per language (explicit minus implicit, fine-tuned XLM-RoBERTa, MultiHateCheck)</small>
+        </div></div>
+        <div class="txt">
+          <div class="kicker"><span class="hud">NLP</span><time>Apr – Jun 2026</time></div>
+          <h3>Multilingual hate speech detection</h3>
+          <p>How much harder is <b>implicit</b> hate to catch than explicit hate, and does it depend on the language and the kind of model? In a team of four we built an end-to-end pipeline (a YAML-configured CLI for data preparation, synthetic data, training and evaluation). I owned the encoder: XLM-RoBERTa fine-tuned on a 28,970-sample corpus in 7 languages.</p>
+          <p>The encoder drops from 0.85 to 0.53 F1 on implicit hate (p &lt; 0.001), worst in German. Few-shot Aya-23, Llama-3-8B and Mistral-7B showed a gap of at most 0.01 on the same benchmark, and adding explanations to the prompt barely helped.</p>
+          <div class="nums"><div><b>0.32</b><span>F1 gap,<br>encoder</span></div><div><b>≤ 0.01</b><span>F1 gap,<br>few-shot LLMs</span></div><div><b>7</b><span>languages</span></div></div>
+          <div class="tags"><span class="tag">XLM-RoBERTa</span><span class="tag">Hugging Face</span><span class="tag">PyTorch</span><span class="tag">LLM evaluation</span></div>
+        </div>
+      </article>
+
+      <article class="panel card proj">
+        <div class="viz">
+          <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of thin contrails among clouds with the predicted mask drawn over them">
+            <defs><filter id="blur"><feGaussianBlur stdDeviation="14"/></filter></defs>
+            <rect width="400" height="170" fill="#0b1638"/>
+            <g filter="url(#blur)" opacity=".75"><ellipse cx="80" cy="50" rx="90" ry="34" fill="#c05a3a"/><ellipse cx="300" cy="120" rx="120" ry="40" fill="#7a3fa0"/><ellipse cx="220" cy="30" rx="70" ry="22" fill="#2f7f8f"/></g>
+            <g stroke="#e8f0ff" stroke-width="1.2" opacity=".55"><path d="M30 140 L190 40"/><path d="M150 160 L360 70"/><path d="M240 20 L390 50"/></g>
+            <g stroke="#ff5f7a" stroke-width="4" stroke-linecap="round" opacity=".9"><path class="mask" d="M30 140 L190 40"/><path class="mask" d="M150 160 L360 70"/><path class="mask" d="M240 20 L390 50"/></g>
+            <text x="12" y="20" font-family="Silkscreen,monospace" font-size="10" fill="#ecebff">Illustration: contrails and predicted mask</text>
+          </svg>
+        </div>
+        <div class="txt">
+          <div class="kicker"><span class="hud">Computer vision</span><time>Feb – Apr 2026</time></div>
+          <h3>Contrail segmentation from orbit</h3>
+          <p>A PyTorch segmentation pipeline that finds climate-warming aircraft contrails in GOES-16 satellite imagery, where they are thin, rare and easy to confuse with cirrus. As an aviation fan, this one was personal. With a team of three I compared U-Net variants (ConvNeXt encoders, attention gates, lightweight maskers) against a <b>100:1 pixel imbalance</b>.</p>
+          <div class="nums"><div><b>0.704</b><span>test Dice,<br>masked ResNet-152</span></div><div><b>2,400</b><span>balanced<br>256×256 tiles</span></div></div>
+          <div class="tags"><a class="tag" href="https://hackmd.io/@VV3yr8-_SEO-g-kxwECVKg/B1rwgEKoWx" target="_blank" rel="noopener">Team blog post ↗</a><span class="tag">PyTorch Lightning</span><span class="tag">U-Net</span><span class="tag">Hydra</span><span class="tag">W&amp;B</span></div>
+        </div>
+      </article>
+
+      <article class="panel card proj">
+        <div class="viz">
+          <svg viewBox="0 0 400 170" role="img" aria-label="Three-layer adaptive network diagram">
+            <g stroke="#62e4ff" stroke-width="1.2" class="edge" opacity=".7">
+              <path d="M70 135 L150 135 M150 135 L240 135 M240 135 L330 135 M70 135 L150 85 M150 135 L240 85 M240 135 L330 85 M150 85 L240 35 M240 85 L240 35 M330 85 L240 35 M150 85 L150 135 M240 85 L240 135"/>
+            </g>
+            <g fill="#101330" stroke-width="2">
+              <g stroke="#62e4ff"><circle cx="70" cy="135" r="11"/><circle cx="150" cy="135" r="11"/><circle cx="240" cy="135" r="11"/><circle cx="330" cy="135" r="11"/></g>
+              <g stroke="#ffd166"><circle cx="150" cy="85" r="10"/><circle cx="240" cy="85" r="10"/><circle cx="330" cy="85" r="10"/></g>
+              <g stroke="#ff5f7a"><circle cx="240" cy="35" r="10"/></g>
+            </g>
+            <g font-family="Silkscreen,monospace" font-size="10"><text x="10" y="160" fill="#62e4ff">states</text><text x="10" y="89" fill="#ffd166">learning</text><text x="10" y="39" fill="#ff5f7a">control of learning</text></g>
+          </svg>
+        </div>
+        <div class="txt">
+          <div class="kicker"><span class="hud">Research · Published</span><time>2025 – 2026</time></div>
+          <h3>Simulating a disorder as an adaptive network</h3>
+          <p>My bachelor's thesis at VU Amsterdam, now a paper: <i>Understanding Body Dysmorphic Disorder Through Dynamic Network Simulation and Roleplay-Based Visualization</i>. It models one episode in the life of a teenager, Ava, as a network of 37 states on three layers: mental states and behaviours, connections that strengthen with use (Hebbian learning), and a layer that controls how fast that learning happens.</p>
+          <p>In simulation the symptoms escalate fast and almost in sync. Stronger self-control barely changes that, and a friend's well-meant reassurance ends up feeding the loop. I then retold the run as an AI-generated role-play video, so non-modellers can watch the cycle unfold.</p>
+          <div class="figs"><figure><img class="shot" data-zoom src="img/bdd-simulation.jpg" width="910" height="483" alt="Simulation plot: most symptom curves rise steeply to their maximum early on, a second cluster follows later"><figcaption>One run: most states hit the ceiling early, the friend's states follow later.</figcaption></figure><figure><img class="shot" data-zoom src="img/bdd-model-full.jpg" width="763" height="1263" style="max-height:150px;object-fit:cover;object-position:top" alt="The full three-layer adaptive network model"><figcaption>The full three-layer model.</figcaption></figure></div>
+          <p style="margin-top:14px">Presented at the <b>Computing Conference 2026 in London</b> and published by <b>Springer Nature</b> in <i>Intelligent Computing</i>, Volume 2. First author, with I.-D. Obada, R. M. Treur, S. C. F. Hendrikse and J. Treur.</p>
+          <div class="cta" style="margin-top:18px"><a class="btn" href="https://www.youtube.com/watch?v=unoVlfvIvpE" target="_blank" rel="noopener">▶ Watch the AI-generated video</a></div>
+          <div class="tags"><a class="tag" href="https://link.springer.com/book/10.1007/978-3-032-24807-7" target="_blank" rel="noopener">Springer proceedings ↗</a><span class="tag">Network-oriented modelling</span></div>
+        </div>
+      </article>
+
+      <article class="panel card proj">
+        <div class="viz real"><img class="shot" data-zoom data-full="img/snapline-full.jpg" src="img/snapline.jpg" width="999" height="412" alt="Screenshot of The Snap Line: a played duration dragged along a line of representable note values, with its rounding error shown below"></div>
+        <div class="txt">
+          <div class="kicker"><span class="hud">Visualisation</span><time>Spring 2026</time></div>
+          <h3>The Snap Line</h3>
+          <p>An interactive explainer for TU Delft's Computer Graphics and Visualisation seminar, built on the paper <i>Make the Unhearable Visible</i> (Heyen, Gleicher and Sedlmair, IEEE TVCG). It lets you play with how a performance's raw note lengths get quantised into durations that sheet music can represent. I wrote the duration-quantisation model; the page is plain JavaScript and SVG.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">SVG</span><span class="tag">Music visualisation</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="panel log" aria-label="Smaller builds">
+      <div><b>Instant-NGP from scratch</b><span>NeRF with a multiresolution hash grid and trilinear interpolation, written from scratch in PyTorch for 3D Visual Computing.</span></div>
+      <div><b>Whisper on Dutch speech</b><span>Fine-tuning and augmenting Whisper for native and non-native Dutch speech, with paired bootstrap significance tests on the DelftBlue cluster.</span></div>
+      <div><b>RAG under attack</b><span>What happens to multi-hop question answering when retrieval goes wrong? With perfect evidence the model reached 0.89 exact match; with real retrieval it topped out near 0.48, so retrieval, not reasoning, was the bottleneck. A little random noise did no harm; piling on look-alike wrong documents did. <a href="https://github.com/CarThrottlefan/LLM_w_RAG_testing" target="_blank" rel="noopener">Code ↗</a></span></div>
+      <div><b>Adversarial examples</b><span>Black-box hill climbing against white-box FGM and PGD attacks, compared on success and wall-clock cost.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="hackathons">
+  <div class="wrap">
+    <div class="head"><span class="hud">Stage 06</span><h2>Hackathons</h2></div>
+    <article class="panel feature proj">
+      <div class="txt">
+        <div class="kicker"><span class="hud">One weekend · team of 4</span><time>8 – 9 June 2024</time></div>
+        <h3>XRP Ledger hackathon: paying people to flatten the peak</h3>
+        <p>We built an app for energy companies to deal with demand spikes. When a spike is detected, the system signals users to cut back, checks who did, and <b>rewards them in XRP tokens</b> in proportion to how much they saved.</p>
+        <p>Python backend on the XRP Ledger, a front end for the users, and reward maths that had to add up to the last percent.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">XRP Ledger</span><span class="tag">Energy</span></div>
+      </div>
+      <div class="viz">
+        <svg viewBox="0 0 520 300" role="img" aria-label="Illustration: energy demand spikes above a threshold, users reduce usage and receive tokens">
+          <path d="M30 250H500M30 250V30" stroke="#9c9fc9" stroke-opacity=".4"/>
+          <path d="M30 120H500" stroke="#ffd166" stroke-dasharray="6 6"/>
+          <path d="M30 210 C90 200 120 190 160 180 S220 150 250 70 S300 60 320 110 S380 170 500 190" fill="none" stroke="#ff5f7a" stroke-width="3" class="mask" style="stroke-dasharray:700;animation-name:draw7"/>
+          <path d="M30 210 C90 200 120 190 160 180 S230 150 260 122 S310 124 330 140 S380 170 500 190" fill="none" stroke="#62e4ff" stroke-width="3"/>
+          <g fill="#ffd166"><circle cx="330" cy="88" r="9" class="det"/><circle cx="356" cy="100" r="7"/><circle cx="378" cy="84" r="5" class="det"/></g>
+          <g font-family="Silkscreen,monospace" font-size="11"><text x="40" y="112" fill="#ffd166">grid threshold</text><text x="150" y="46" fill="#ff5f7a">spike without nudges</text><text x="300" y="222" fill="#62e4ff">demand after nudges</text><text x="392" y="92" fill="#ffd166">XRP rewards</text><text x="436" y="270" fill="#9c9fc9">time →</text></g>
+        </svg>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="panel contact">
+      <span class="hud" style="color:var(--coral)">Stage 07</span>
+      <h2 style="margin-top:22px">Ready, <em>player two?</em></h2>
+      <p class="sub" style="margin-top:18px">Internships, thesis ideas, start-up plans or a project that needs a model taken out of the notebook: write to me.</p>
+      <div class="mail"><a href="mailto:alexvalentineu@gmail.com" id="mail">alexvalentineu@gmail.com</a><button class="chip" id="copyMail">Copy</button></div>
+      <div class="cta">
+        <a class="btn" href="https://www.linkedin.com/in/alexandru-valentin-florea/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/CarThrottlefan" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Alexandru-Valentin Florea. Built in Amsterdam.</span>
+    <span>Old-school players know: <kbd>↑</kbd> <kbd>↑</kbd> <kbd>↓</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>←</kbd> <kbd>→</kbd> <kbd>B</kbd> <kbd>A</kbd></span>
+  </div>
+</footer>
+
+<div class="pad" id="pad" aria-label="Game pad navigation">
+  <button class="x" id="padX" aria-label="Hide or show the game pad">X</button>
+  <div class="dpad">
+    <button class="u" data-k="ArrowUp" aria-label="Previous section">▲</button>
+    <button class="l" data-k="ArrowLeft" aria-label="Earlier on the timeline">◀</button>
+    <span class="m"></span>
+    <button class="r" data-k="ArrowRight" aria-label="Later on the timeline">▶</button>
+    <button class="d" data-k="ArrowDown" aria-label="Next section">▼</button>
+  </div>
+  <div class="ab"><button data-k="b" aria-label="B button">B</button><button data-k="a" aria-label="A button">A</button></div>
+</div>
+
+<div class="modal" id="cheat" role="dialog" aria-modal="true" aria-labelledby="cheatT">
+  <div class="box">
+    <h3 id="cheatT">Cheat code accepted</h3>
+    <p>You unlocked the colouring game, a nod to a pixel-colouring pen I made years ago. Pick a colour and paint the rocket. <a id="penLink" href="#" target="_blank" rel="noopener" hidden>See the original on CodePen ↗</a></p>
+    <canvas id="paint" width="320" height="320"></canvas>
+    <div class="pal" id="pal"></div>
+    <button class="btn" id="cheatClose">Back to the site</button>
+  </div>
+</div>
+
+<div class="lb" id="lb" aria-hidden="true"><img alt=""></div>
+
+<script>
+/* ---------- things to edit ---------- */
+const CONFIG={
+  codepen:'https://codepen.io/CarThrottlefan/pen/oELwqa' // paste the URL of your CodePen colouring game here and the link in the cheat modal appears
+};
+const TIMELINE=[
+  {y:'2003',ico:'★',nm:'New game',h:'Player one enters',p:'Born in 2003 and raised in Bucharest. Romanian is the first language pack installed.'},
+  {gap:'▸▸ fast forward ▸▸'},
+  {y:'2018',ico:'9.96',nm:'Middle school done',h:'Stage cleared: Școala Gimnazială 79, Bucharest',p:'Finished middle school with a 9.96 average and scored 9.48 in the Evaluarea Națională, the national exam that decides high school admission in Romania.'},
+  {y:'2018',ico:'CNMV',nm:'High school',h:'Stage: Colegiul Național „Mihai Viteazul”, Bucharest',p:'Maths and computer science track at one of Romania’s top high schools. Along the way: the national informatics certificate, the ECDL, Cambridge C2 in English (2021) plus TOEFL iBT at C1, the debate team, and a first job fundraising for WWF.'},
+  {y:'2020',ico:'◉',nm:'Trackside',h:'Side quest: motorsport photographer',p:'Lockdown bought time to learn a DSLR properly. It led to shooting three rounds of the Romanian national championship for Junior Motorsport.'},
+  {y:'Jun 2022',ico:'9.40',nm:'High school done',h:'Stage cleared: Romanian Baccalaureate',p:'Graduated from Colegiul Național „Mihai Viteazul” with 9.40 in the Baccalaureate, on the maths and computer science track.'},
+  {gap:'▸▸ new country ▸▸'},
+  {y:'Sep 2022',ico:'VU',nm:'Amsterdam',h:'Stage: Vrije Universiteit Amsterdam',p:'Left Bucharest for the Netherlands to start a BSc in Computer Science at VU Amsterdam, with a minor in Business Analytics and Data Science. New country, new language, first time living abroad.'},
+  {y:'2023',ico:'¥OKO¥',cur:1,nm:'Yokoy',h:'Side quest: Yokoy',p:'Joined the Data Science department as a working student, keeping a production OCR invoice system reading correctly. Stayed until January 2025. The same autumn I started the Honours Programme and built PackBot, a Lego robot that reads package numbers.'},
+  {y:'Aug 2025',ico:'BSc',nm:'BSc graduation',h:'Stage cleared: BSc Computer Science',p:'Graduated from VU Amsterdam in Computer Science in August, with the Honours Programme finished alongside and an 8.5 for the thesis.'},
+  {gap:'▸▸ new campus ▸▸'},
+  {y:'Sep 2025',ico:'TU',nm:'MSc starts',h:'Stage: TU Delft',p:'Started the MSc Data Science and AI Technology at TU Delft in September, choosing the Visual Computing and Language and Speech Technology themes.'},
+  {y:'2026',ico:'▲',nm:'Models leave the lab',h:'Contrails and seven languages',p:'First year at Delft, and the models start meeting real data: segmenting aircraft contrails in satellite imagery, and measuring how much harder implicit hate speech is to catch than explicit, across seven languages.'},
+  {y:'Jul 2026',ico:'LDN',nm:'London',h:'Boss level: Computing Conference 2026',p:'Presented my first paper on stage at the Computing Conference in London. It was later published by Springer Nature in Intelligent Computing, Volume 2, with me as first author.'},
+  {y:'Sep 2026',ico:'YARC',nm:'On the rails',h:'Field mission: YARC',p:'Built the camera perception system of a rail-inspection robot for a start-up: recording pipeline, dataset, three YOLO26 detectors, and live detection on the track during a two-day field test.'},
+  {y:'∞',ico:'✦',nm:'To infinity and beyond',h:'Next stage: loading',p:'Thesis, industry, and eventually a start-up of my own.',warp:1}
+];
+/* ------------------------------------ */
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
+const still=()=>RM||document.documentElement.classList.contains('plain');
+
+/* starfield + warp */
+const sky=$('#sky'),g=sky.getContext('2d');let W,H,warp=0,warpT=0,scrollV=0,lastY=scrollY,raf=0;
+const COL=['#ffffff','#ffffff','#ffffff','#c9f4ff','#ffd9df','#fff0c2'];
+const star=init=>({x:(Math.random()-.5)*2.4,y:(Math.random()-.5)*2.4,z:init?Math.random()*.95+.05:1,c:COL[Math.random()*COL.length|0]});
+let stars=Array.from({length:Math.min(700,Math.round(innerWidth*innerHeight/2600))},()=>star(true));
+function size(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;sky.width=W*d;sky.height=H*d;g.setTransform(d,0,0,d,0,0);if(still())draw(0)}
+function draw(dt){
+  warp+=(warpT-warp)*Math.min(1,dt*3);scrollV*=Math.pow(.02,dt);
+  const sp=.012+warp*1.5+Math.min(.7,scrollV*.35),f=Math.max(W,H)*.5,cx=W/2,cy=H/2;
+  g.clearRect(0,0,W,H);g.lineCap='round';
+  for(const s of stars){
+    const pz=s.z;s.z-=sp*dt;
+    if(s.z<.02){Object.assign(s,star(false));continue}
+    const x=cx+s.x/s.z*f,y=cy+s.y/s.z*f;
+    if(x<-50||x>W+50||y<-50||y>H+50){Object.assign(s,star(false));continue}
+    const a=Math.min(1,(1-s.z)*1.3+.15),r=(1-s.z)*1.5+.3;
+    g.globalAlpha=a;
+    if(sp>.08){g.strokeStyle=s.c;g.lineWidth=r;g.beginPath();g.moveTo(cx+s.x/pz*f,cy+s.y/pz*f);g.lineTo(x,y);g.stroke()}
+    else{g.fillStyle=s.c;g.beginPath();g.arc(x,y,r,0,6.3);g.fill()}
+  }
+  g.globalAlpha=1;
+}
+let t0=0;function loop(t){const dt=Math.min(.05,(t-t0)/1000||0);t0=t;draw(dt);raf=still()?0:requestAnimationFrame(loop)}
+function startSky(){if(!raf&&!still())raf=requestAnimationFrame(loop);else if(still())draw(0)}
+addEventListener('resize',size);
+addEventListener('scroll',()=>{scrollV+=Math.abs(scrollY-lastY)/120;lastY=scrollY},{passive:true});
+function setWarp(on){if(still())on=false;warpT=on?1:0;document.documentElement.classList.toggle('warp',!!on)}
+$('#warpBtn').onclick=()=>setWarp(!warpT);$('#warpOff').onclick=()=>setWarp(false);
+size();startSky();
+
+/* text-only mode */
+$('#plainBtn').onclick=e=>{const on=document.documentElement.classList.toggle('plain');e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Full version':'Text only';setWarp(false);size();startSky()};
+
+/* hello, world -> hello, guest */
+function typeHello(){
+  if(still())return;const el=$('#typed');const seq=[['t','Hello, world.'],['w',900],['d',6],['w',250],['t','guest!']];let s='';el.textContent='';
+  (function step(){const a=seq.shift();if(!a)return;
+    if(a[0]==='w')return setTimeout(step,a[1]);
+    if(a[0]==='t'){let i=0;(function k(){if(i<a[1].length){s+=a[1][i++];el.textContent=s;setTimeout(k,55+Math.random()*60)}else step()})()}
+    if(a[0]==='d'){let n=a[1];(function k(){if(n-->0){s=s.slice(0,-1);el.textContent=s;setTimeout(k,60)}else step()})()}
+  })();
+}
+
+/* boot screen, once per visit */
+(function(){
+  const b=$('#boot');
+  if(RM||store.get('booted')){b.remove();typeHello();return}
+  const lines=['<b>AVF-OS</b> v2026.11','','checking memory ............ ok','loading projects [5] ........ ok','mounting /dev/cam0-3 ........ ok','tokenising 7 languages ...... ok','calibrating starfield ....... ok','flaps, trim, tyre temps ..... ok','','<b>&gt; cleared for take-off</b>'];
+  const log=$('#bootlog');let i=0,done=false;
+  const end=()=>{if(done)return;done=true;store.set('booted','1');b.classList.add('off');setTimeout(()=>b.remove(),600);typeHello();removeEventListener('keydown',end)};
+  const iv=setInterval(()=>{if(i<lines.length)log.innerHTML+=lines[i++]+'\n';else{clearInterval(iv);setTimeout(end,500)}},170);
+  b.onclick=end;addEventListener('keydown',end);
+})();
+
+/* timeline */
+const track=$('#tlTrack'),scr=$('#tlScroll'),stage=$('#stage');let sel=0;
+const items=TIMELINE.filter(t=>!t.gap);
+track.innerHTML=TIMELINE.map(t=>t.gap?`<div class="gap">${t.gap}</div>`:`<button class="node${t.slot?' slot':''}" data-i="${items.indexOf(t)}"><span class="yr">${t.y}</span><span class="dot"></span><span class="ico${t.cur?' cur':''}">${t.ico}</span><span class="nm">${t.nm}</span></button>`).join('');
+const nodes=$$('.node');
+function pick(i,center=true){
+  sel=Math.max(0,Math.min(items.length-1,i));const t=items[sel];
+  nodes.forEach((n,k)=>{n.classList.toggle('on',k===sel);n.setAttribute('aria-pressed',k===sel)});
+  stage.innerHTML=`<span class="hud">${t.y}</span><h3>${t.h}</h3><p class="${t.todo?'todo':''}">${t.p}</p>${t.warp?'<button class="btn go" id="tlWarp">Engage ✦</button>':''}`;
+  if(t.warp)$('#tlWarp').onclick=()=>setWarp(true);
+  if(center){const n=nodes[sel];scr.scrollTo({left:n.offsetLeft-scr.clientWidth/2+n.offsetWidth/2,behavior:still()?'auto':'smooth'})}
+}
+let dragX=null,dragL=0,moved=0;
+scr.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;dragX=e.clientX;dragL=scr.scrollLeft;moved=0});
+addEventListener('pointermove',e=>{if(dragX===null)return;const dx=e.clientX-dragX;moved=Math.max(moved,Math.abs(dx));if(moved>4){scr.classList.add('drag');scr.scrollLeft=dragL-dx}});
+addEventListener('pointerup',()=>{dragX=null;scr.classList.remove('drag')});
+track.addEventListener('click',e=>{const n=e.target.closest('.node');if(n&&moved<5)pick(+n.dataset.i)});
+scr.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){pick(sel+1);e.preventDefault()}if(e.key==='ArrowLeft'){pick(sel-1);e.preventDefault()}});
+pick(items.length-2,false);requestAnimationFrame(()=>{const n=nodes[sel];scr.scrollLeft=n.offsetLeft-scr.clientWidth/2+n.offsetWidth/2});
+
+/* rail sleepers for the YARC diagram */
+(function(){let s='';for(let x=-40;x<=560;x+=40){s+=`<rect x="${x}" y="100" width="14" height="120" fill="#3a3f6e"/><rect x="${x+2}" y="113" width="10" height="14" fill="#9c9fc9"/><rect x="${x+2}" y="193" width="10" height="14" fill="#9c9fc9"/>`}$('#sleepers').innerHTML=s})();
+
+/* card tilt + glow */
+if(matchMedia('(hover:hover)').matches)$$('.card').forEach(c=>{
+  c.addEventListener('pointermove',e=>{if(still())return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%');c.style.setProperty('--ry',(x-.5)*5+'deg');c.style.setProperty('--rx',(.5-y)*5+'deg')});
+  c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg');c.style.setProperty('--my','-40%')});
+});
+
+/* nav highlight */
+const secs=$$('main > section'),links=$$('.nav nav a');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>io.observe(s));
+const leds=$$('#rev i');function rev(){const m=document.documentElement.scrollHeight-innerHeight,n=Math.round((m>0?scrollY/m:0)*12);leds.forEach((l,i)=>l.classList.toggle('on',i<n))}
+addEventListener('scroll',rev,{passive:true});rev();
+
+/* d-pad + konami */
+const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let buf=[];
+function feed(k){buf.push(k.length===1?k.toLowerCase():k);buf=buf.slice(-10);if(buf.join()===KONAMI.join()){buf=[];openCheat()}}
+addEventListener('keydown',e=>feed(e.key));
+function go(dir){let i=0;secs.forEach((s,k)=>{if(s.getBoundingClientRect().top<=80)i=k});
+  const top=secs[i].getBoundingClientRect().top;const j=dir>0?i+1:(top<-40?i:i-1);
+  (secs[Math.max(0,Math.min(secs.length-1,j))]).scrollIntoView({behavior:still()?'auto':'smooth',block:'start'})}
+$$('#pad [data-k]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;feed(k);
+  if(k==='ArrowUp')go(-1);if(k==='ArrowDown')go(1);if(k==='ArrowLeft')pick(sel-1);if(k==='ArrowRight')pick(sel+1)});
+$('#padX').onclick=e=>{const m=$('#pad').classList.toggle('min');e.currentTarget.textContent=m?'✛':'X'};
+if(innerWidth<700)$('#padX').click();
+
+/* colouring game */
+const ART=['................','.......##.......','......#..#......','.....#....#.....','.....#....#.....','.....#.##.#.....','.....#.##.#.....','.....#....#.....','....##....##....','...#.#....#.#...','..#..#....#..#..','..####....####..','.....######.....','......#..#......','.......##.......','................'];
+const PAL=['#ff5f7a','#ffd166','#62e4ff','#8dffb0','#b48cff','#ecebff','#0a0c22'];let ink=PAL[0],cells={},painting=false;
+const pc=$('#paint'),px=pc.getContext('2d');
+function paintAll(){px.fillStyle='#0a0c22';px.fillRect(0,0,320,320);
+  for(let y=0;y<16;y++)for(let x=0;x<16;x++){const o=ART[y][x]==='#';px.fillStyle=o?'#ecebff':(cells[x+','+y]||'#0a0c22');px.fillRect(x*20,y*20,20,20);
+    if(!o){px.strokeStyle='rgba(150,160,255,.08)';px.strokeRect(x*20+.5,y*20+.5,19,19)}}}
+function dab(e){const r=pc.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*16),y=Math.floor((e.clientY-r.top)/r.height*16);
+  if(x<0||y<0||x>15||y>15||ART[y][x]==='#')return;cells[x+','+y]=ink;paintAll()}
+pc.addEventListener('pointerdown',e=>{painting=true;dab(e)});pc.addEventListener('pointermove',e=>painting&&dab(e));addEventListener('pointerup',()=>painting=false);
+$('#pal').innerHTML=PAL.map((c,i)=>`<button style="background:${c}" data-c="${c}" class="${i?'':'on'}" aria-label="Colour ${i+1}"></button>`).join('')+'<button class="chip" id="wipe">Clear</button>';
+$('#pal').onclick=e=>{const b=e.target.closest('[data-c]');if(b){ink=b.dataset.c;$$('#pal [data-c]').forEach(x=>x.classList.toggle('on',x===b))}if(e.target.id==='wipe'){cells={};paintAll()}};
+function openCheat(){paintAll();if(CONFIG.codepen){$('#penLink').href=CONFIG.codepen;$('#penLink').hidden=false}$('#cheat').classList.add('on');$('#cheatClose').focus()}
+const closeCheat=()=>$('#cheat').classList.remove('on');
+$('#cheatClose').onclick=closeCheat;$('#cheat').onclick=e=>{if(e.target.id==='cheat')closeCheat()};addEventListener('keydown',e=>e.key==='Escape'&&closeCheat());
+
+/* click an image to enlarge it */
+document.addEventListener('click',e=>{const i=e.target.closest('img[data-zoom]'),lb=$('#lb');if(i){lb.querySelector('img').src=i.dataset.full||i.src;lb.classList.add('on')}else if(e.target.closest('#lb'))lb.classList.remove('on')});
+addEventListener('keydown',e=>e.key==='Escape'&&$('#lb').classList.remove('on'));
+
+/* copy email */
+$('#copyMail').onclick=async e=>{const b=e.currentTarget;try{await navigator.clipboard.writeText($('#mail').textContent);b.textContent='Copied'}catch(err){b.textContent='Select and copy'}setTimeout(()=>b.textContent='Copy',1600)};
+</script>
+</body>
+</html>

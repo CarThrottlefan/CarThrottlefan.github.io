@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YARC case study · Alexandru-Valentin Florea</title>
+<meta name="description" content="How I built the camera perception subsystem of a rail-inspection robot: recording, dataset, YOLO26 detectors and live detection on the track.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Silkscreen:wght@400;700&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="index.html"><i></i>AVF</a>
+    <nav aria-label="Site">
+      <a href="index.html#projects">Projects</a><a href="index.html#studies">Studies</a><a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="case">
+  <div class="wrap">
+    <a class="back" href="index.html#projects">← Back to all projects</a>
+    <div class="hud" style="color:var(--coral);margin-bottom:14px">Case study · Sept – Nov 2026 · TU Delft Joint Interdisciplinary Project</div>
+    <h1>Teaching a rail trolley to see</h1>
+    <p class="lede">YARC is a start-up building an affordable robot that rides the rails and inspects them. In a five-person team I owned the <b>camera perception subsystem</b>: getting clean footage off a hand-pushed trolley, turning it into a dataset I could trust, training the detectors, and running them live on the track.</p>
+    <div class="keynums">
+      <div class="panel"><b>3</b><span>camera views,<br>one detector each</span></div>
+      <div class="panel"><b>16</b><span>recording runs<br>over 4 tracks</span></div>
+      <div class="panel"><b>1,529</b><span>top-down frames<br>extracted</span></div>
+      <div class="panel"><b>0.986</b><span>mAP50 on a<br>held-out track*</span></div>
+      <div class="panel"><b>63 ms</b><span>per image on a<br>laptop CPU</span></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--dim);margin-top:12px">*Top-down model, common classes (sleepers, fasteners, bolts), small validation set. The details are below.</p>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap split wide">
+    <div>
+      <span class="hud">01 · The idea</span>
+      <h2>Detect components first, infer defects second</h2>
+      <div class="prose">
+        <p>Defects are rare. A detector trained directly on “defect” would have almost nothing to learn from. Components are different: sleepers, fasteners and bolts show up in every frame and look distinct, so a few hundred labelled boxes are enough to teach a model to find them.</p>
+        <p>Missing parts can then be <b>inferred by rules</b>: a sleeper side with no fastener, a concrete fastener with no clip, a baseplate with fewer bolts than its twin. An alarm can show which rule fired, which supports the inspector's judgement instead of replacing it.</p>
+        <p>The three cameras see the track so differently that one model would not serve all of them, so each view has its own detector. All are YOLO26 models from the Ultralytics library, fine-tuned from COCO-pretrained weights. With only dozens of labelled images, transfer learning was the practical choice.</p>
+      </div>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Camera</th><th>View</th><th>Looks for</th><th>Model</th></tr>
+        <tr><td>HD webcam</td><td>Top-down over one rail</td><td>Sleepers, fasteners, bolts, clips; missing bolts and fasteners</td><td>YOLO26n, trained</td></tr>
+        <tr><td>4K webcam</td><td>Forward and down</td><td>Sleeper condition, switches, displaced clips</td><td>YOLO26s, trained</td></tr>
+        <tr><td>360° camera</td><td>All round, mounted high</td><td>People and vehicles near the track</td><td>YOLO26n, COCO-pretrained</td></tr>
+      </table></div>
+    </div>
+    <figure><img class="shot" data-zoom src="img/yarc-hd.jpg" width="646" height="366" alt="Top-down view of a rail with boxes around a wooden sleeper, four fasteners and their bolts"><figcaption>The top-down model on a frame from the held-out track: sleeper, fasteners and their bolts all found.</figcaption></figure>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap split">
+    <figure><img class="shot" data-zoom src="img/yarc-setup.jpg" width="1400" height="1050" alt="A simple trolley on a railway track carrying a laptop and cameras"><figcaption>Day one was a dry run with an improvised rig. The 4K camera sat on the laptop screen, whose hinge shook with every sleeper. Nearly all the usable data came from the properly mounted second day.</figcaption></figure>
+    <div>
+      <span class="hud">02 · Recording</span>
+      <h2>Getting honest footage off a moving trolley</h2>
+      <div class="prose">
+        <p>All cameras plug into one laptop running <b>ROS 2 Jazzy</b>, and every stream is written into a time-stamped MCAP bag. The principle was to record with exactly the sensors that would later run the detectors, so the models never have to transfer between cameras.</p>
+        <ul>
+          <li><b>My own camera node.</b> The standard ROS USB camera driver recorded green, corrupted frames in MJPEG mode. I replaced it with a node that opens each camera through OpenCV and publishes the camera's own JPEG bytes untouched. It costs almost no CPU, and training data and live input share the same compression.</li>
+          <li><b>Data volume.</b> A 59-second test with four cameras produced 9.7 GiB, every camera near 30 Hz. One field run was about 12 GB.</li>
+          <li><b>USB limits.</b> The laptop's USB bus could carry only three cameras at once, so the tools adapt to whichever cameras are connected.</li>
+          <li><b>Operator markers.</b> A grid viewer shows all streams with buttons (track, sleeper, switch, fastener, bolt). A press stores the capture timestamp, pointing to defect frames later.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap split wide">
+    <div>
+      <span class="hud">03 · Dataset</span>
+      <h2>From 30 Hz video to frames worth labelling</h2>
+      <div class="prose">
+        <p>At 30 Hz, neighbouring frames are almost identical, and the trolley often stood still. Labelling them all would waste effort and inflate the scores.</p>
+        <ul>
+          <li><b>Sampling by distance, not time.</b> For the top-down camera, forward motion is a pure shift of the image. I measure that shift with <b>phase correlation</b> on a small greyscale preview and keep a frame once the view has moved 40% of its height. Result: two to three frames per sleeper, none while stopped.</li>
+          <li><b>The forward camera needed something else.</b> In a forward view the motion is closer to a zoom, so no single shift exists; the same method kept 21 frames across 13 runs. That camera is sampled once per second instead.</li>
+          <li><b>Rescuing cut-off recordings.</b> A flaky USB hub left some bags without their index. A streaming fallback reader recovered 1,789 frames from one run that would otherwise have been lost.</li>
+          <li><b>Split by track, not by frame.</b> A random split puts a frame in training and its neighbour, the same sleeper one second later, in test. That measures memory. Whole tracks are held out instead.</li>
+        </ul>
+      </div>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Track</th><th>Role</th><th>Why</th></tr>
+        <tr><td>Track 1</td><td>Train</td><td>All the handheld first-day footage</td></tr>
+        <tr><td>Track 4</td><td>Train</td><td>Most mounted runs</td></tr>
+        <tr><td>Track 3</td><td>Validation</td><td>Held out</td></tr>
+        <tr><td>Track 2</td><td>Test</td><td>Held out</td></tr>
+      </table></div>
+    </div>
+    <div style="display:grid;gap:18px">
+      <figure><img class="shot" data-zoom src="img/yarc-labeling.jpg" width="1300" height="683" alt="A labelling tool with boxes drawn around fasteners and bolts on a top-down rail image"><figcaption>Labelling in X-AnyLabeling, following a written guide so that boxes stay consistent between people.</figcaption></figure>
+      <figure><img class="shot" data-zoom src="img/yarc-classes.png" width="700" height="717" alt="Bar chart of labelled boxes per class: 249 bolts, 93 fasteners, 47 wooden sleepers, 6 clips, 3 concrete sleepers, 1 empty bolt hole"><figcaption>Round one: 249 bolts but a single empty bolt hole. The imbalance shapes everything that follows.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap">
+    <span class="hud">04 · Models</span>
+    <h2>What the detectors learned, and what they could not</h2>
+    <div class="split">
+      <div>
+        <div class="prose">
+          <p><b>Top-down model.</b> Trained on 46 labelled frames (399 boxes). Nano and small variants behaved the same, so I kept the nano: equally good, and kinder to the hardware it had to run on.</p>
+        </div>
+        <div class="tblwrap"><table class="tbl">
+          <tr><th>Class</th><th>Instances</th><th>Precision</th><th>Recall</th><th>mAP50</th></tr>
+          <tr><td><code>sleeper_wood</code></td><td>12</td><td>1.000</td><td>0.956</td><td>0.995</td></tr>
+          <tr><td><code>fastener</code></td><td>21</td><td>0.928</td><td>1.000</td><td>0.993</td></tr>
+          <tr><td><code>bolt</code></td><td>62</td><td>0.968</td><td>0.975</td><td>0.970</td></tr>
+          <tr><td>All</td><td>95</td><td>0.965</td><td>0.977</td><td>0.986</td></tr>
+        </table></div>
+        <div class="prose" style="margin-top:16px">
+          <p>These numbers come from 11 frames of one held-out track on one day. They say the common components are solid. They say nothing about the rare classes, which do not even occur in the validation frames.</p>
+          <p><b>Forward model.</b> YOLO26s at 960 pixels, trained on 55 frames. It reaches mAP50 0.49 over all classes: sleepers are found well, but damage and displaced clips have too few examples to learn, and the switch score is not meaningful because every validation switch also appears in training.</p>
+          <p><b>People.</b> The COCO-pretrained nano model needed no training at all. People are among the best-represented classes in COCO.</p>
+        </div>
+      </div>
+      <figure><img class="shot" data-zoom src="img/yarc-curves.png" width="1400" height="700" alt="Training curves of the forward model: losses falling, validation mAP50 levelling off near 0.5"><figcaption>Forward model training curves. Losses fall steadily; validation mAP50 levels off around 0.5, held back by the rare classes and the tiny validation set.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap split">
+    <figure><img class="shot" data-zoom src="img/yarc-missing-bolt.jpg" width="1100" height="825" alt="Top-down frame where the left baseplate has fewer detected bolts than the right one"><figcaption>Flagged by the rule: the two plates of this sleeper disagree on their bolt count.</figcaption></figure>
+    <div>
+      <span class="hud">05 · Mining</span>
+      <h2>Using the model to find its own training data</h2>
+      <div class="prose">
+        <p>I started with exactly one example of a missing bolt. To find more, I ran the top-down model over all 1,529 frames and let a rule flag suspicious ones for review. Each rule I tried exposed something about the data:</p>
+      </div>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Rule</th><th>Flagged</th><th>What happened</th></tr>
+        <tr><td>Fastener with fewer than 2 bolts</td><td>0</td><td>The known defect plate has four holes, so it still counted enough</td></tr>
+        <tr><td>Fewer than 2, or an odd count</td><td>550</td><td>The most common plate holds 3 bolts, so normal plates were flagged</td></tr>
+        <tr><td>The two plates of a sleeper differ</td><td>95</td><td>Works for any plate type: 11 confirmed missing-bolt frames</td></tr>
+      </table></div>
+      <div class="prose" style="margin-top:16px"><p>One example became twelve. The winning rule was the one that made no assumption about the type of plate, and the 11 confirmed frames now act as a regression test for later versions.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap">
+    <span class="hud">06 · Live</span>
+    <h2>Running it on the trolley</h2>
+    <div class="split wide">
+      <div class="prose">
+        <p>A generic <b>ROS 2 detector node</b> runs once per camera, configured by parameters: model, topic, input size, rate, confidence threshold, class filter.</p>
+        <ul>
+          <li><b>Never fall behind.</b> The subscription only stores the newest message, like a mailbox. A timer picks it up, runs the detector and publishes. If inference is slower than the camera, frames are skipped, never queued.</li>
+          <li><b>Separate processes.</b> Detection and the viewer run apart, so a viewer crash does not stop detection.</li>
+          <li><b>CPU budget.</b> Exported to OpenVINO, the top-down model takes 63 ms per image on an i5 laptop (about 16 fps); on a GPU it takes 6 ms.</li>
+        </ul>
+        <p style="margin-top:14px">At the two-day field test in October 2026, all three detectors ran together while the trolley was pushed along the track. Sleepers, fasteners and bolts were detected reliably, also at higher pushing speed, on a track whose images had been held out from training. The 360° model picked up people near the trolley, and the forward model boxed the one known displaced clip. It also predicted switches too eagerly, and the 4K stream got jittery above walking pace because the cameras share USB bandwidth.</p>
+      </div>
+      <div style="display:grid;gap:18px">
+        <figure><img class="shot" data-zoom src="img/yarc-laptop.jpg" width="1400" height="536" alt="Laptop on the trolley showing live detections in the top-down and forward camera views"><figcaption>The live grid on the trolley, 29 October 2026.</figcaption></figure>
+        <figure><img class="shot" data-zoom src="img/yarc-4k-clip.jpg" width="642" height="353" alt="Forward camera view with sleepers boxed and one fastening labelled clip_displaced 0.85"><figcaption>The forward model flags the known displaced clip, despite having seen only a few examples.</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="part">
+  <div class="wrap">
+    <span class="hud">07 · Limits</span>
+    <h2>What it cannot do yet</h2>
+    <div class="split">
+      <div class="prose">
+        <ul>
+          <li><b>Rare defects.</b> Empty holes, clips, sleeper damage and displaced clips have too few examples. The rules are the main defence, and they inherit every mistake of the component detector. A second, targeted labelling round is the next step.</li>
+          <li><b>A small test.</b> Validation and test are one track each. The held-out test track still has to be scored.</li>
+          <li><b>Rules are offline.</b> The missing-bolt rule needs persistence over several frames before it can raise a live alarm.</li>
+          <li><b>What a camera cannot see.</b> A loose bolt can look identical to a tight one from above.</li>
+          <li><b>A fixed viewpoint.</b> The models are reliable because the camera mount is fixed. On footage from a different camera the forward model only partly transferred and the top-down model did not transfer at all. A new viewpoint needs its own data.</li>
+        </ul>
+      </div>
+      <div class="figs" style="margin-top:0">
+        <figure><img class="shot" data-zoom src="img/yarc-unseen-4k.jpg" width="900" height="896" alt="Forward model on footage from a different camera, finding some sleepers with low confidence"><figcaption>Unseen camera: the forward model partly transfers.</figcaption></figure>
+        <figure><img class="shot" data-zoom src="img/yarc-unseen-hd.jpg" width="900" height="896" alt="Top-down model on footage from a different camera, boxing the whole scene as one sleeper"><figcaption>The top-down model does not: it only knows a view from 40 cm up.</figcaption></figure>
+      </div>
+    </div>
+    <div class="cta" style="margin-top:36px"><a class="btn go" href="index.html#projects">← Back to all projects</a><a class="btn" href="index.html#contact">Get in touch</a></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Alexandru-Valentin Florea. Built in Amsterdam.</span><span>Team project; this page covers my part, the camera subsystem.</span></div></footer>
+
+<div class="lb" id="lb" aria-hidden="true"><img alt=""></div>
+
+<script>
+/* a still starfield and the image lightbox; the animated version lives on the home page */
+const c=document.getElementById('sky'),g=c.getContext('2d');
+function stars(){const d=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight;c.width=W*d;c.height=H*d;g.setTransform(d,0,0,d,0,0);
+  const n=Math.min(500,Math.round(W*H/3200));for(let i=0;i<n;i++){g.globalAlpha=Math.random()*.8+.15;g.fillStyle=['#fff','#fff','#c9f4ff','#ffd9df'][i%4];g.beginPath();g.arc(Math.random()*W,Math.random()*H,Math.random()*1.3+.3,0,6.3);g.fill()}}
+stars();addEventListener('resize',stars);
+const lb=document.getElementById('lb');
+document.addEventListener('click',e=>{const i=e.target.closest('img[data-zoom]');if(i){lb.querySelector('img').src=i.dataset.full||i.src;lb.classList.add('on')}else if(e.target.closest('#lb'))lb.classList.remove('on')});
+addEventListener('keydown',e=>e.key==='Escape'&&lb.classList.remove('on'));
+</script>
+</body>
+</html>
