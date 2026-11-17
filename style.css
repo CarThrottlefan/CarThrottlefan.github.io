@@ -170,6 +170,7 @@ h2{font-weight:700;font-size:clamp(28px,4.4vw,52px);letter-spacing:-.02em}
 .job ul{margin:0;padding:0;list-style:none;display:grid;gap:14px}
 .job li{padding-left:24px;position:relative}
 .job li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:9px;background:var(--cyan)}
+.job>*{min-width:0}
 .rx{font-family:var(--f-mono);font-size:13px;color:var(--dim);margin-top:22px;padding:12px 14px;border:1px dashed var(--line);border-radius:8px;overflow-x:auto;white-space:nowrap}
 .rx em{color:var(--coral);font-style:normal}.rx u{color:var(--gold);text-decoration:none}
 @media (max-width:760px){.job{grid-template-columns:1fr}}
@@ -213,6 +214,7 @@ h2{font-weight:700;font-size:clamp(28px,4.4vw,52px);letter-spacing:-.02em}
 .log b{font:500 14px/1.5 var(--f-mono);color:var(--cyan)}
 .log span{color:var(--dim);font-size:15.5px}
 @media (max-width:640px){.log div{grid-template-columns:1fr;gap:4px}}
+.split>*,.figs>*,.grid>*,.about>*,.hero .wrap>*{min-width:0}
 
 /* svg animation */
 .sleepers{animation:roll 1.1s linear infinite}
